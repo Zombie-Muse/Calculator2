@@ -7,7 +7,10 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="bg_gray">#939393</color>
-    <color name="number_gray">#CFCFCF</color>
-    <color name="op_gray">#AAAAAA</color>
+
+<!--    Button colors    -->
+
+    <color name="bg_gray">#B5B5B5</color>
+    <color name="number_gray">#E6E6E6</color>
+    <color name="op_gray">#CCCCCC</color>
 </resources>
