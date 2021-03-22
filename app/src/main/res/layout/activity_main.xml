@@ -25,7 +25,7 @@
         android:inputType="textPersonName"
         android:background="@color/bg_gray"
         android:gravity="right"
-        android:text="1+2+3+69" />
+        android:text="0" />
 
     <TextView
         android:id="@+id/display"
@@ -53,6 +53,7 @@
                 android:layout_width="30pt"
                 android:layout_margin="1pt"
                 android:text="%"
+                android:onClick="btnPercentClick"
                 android:textColor="@color/black"
                 android:backgroundTint="@color/op_gray">
             </Button>
@@ -62,7 +63,8 @@
                 android:layout_height="30pt"
                 android:layout_width="30pt"
                 android:layout_margin="1pt"
-                android:text="Root"
+                android:text="\u221A"
+                android:onClick="btnRootClick"
                 android:textColor="@color/black"
                 android:backgroundTint="@color/op_gray">
             </Button>
@@ -72,7 +74,8 @@
                 android:layout_height="30pt"
                 android:layout_width="30pt"
                 android:layout_margin="1pt"
-                android:text="sqrRt"
+                android:text="sqr"
+                android:onClick="btnSqrClick"
                 android:textColor="@color/black"
                 android:backgroundTint="@color/op_gray">
             </Button>
@@ -83,6 +86,7 @@
                 android:layout_width="30pt"
                 android:layout_margin="1pt"
                 android:text="1/x"
+                android:onClick="btnOneXClick"
                 android:textColor="@color/black"
                 android:backgroundTint="@color/op_gray">
             </Button>
@@ -98,6 +102,7 @@
                 android:layout_width="30pt"
                 android:layout_margin="1pt"
                 android:text="CE"
+                android:onClick="btnCeClick"
                 android:textColor="@color/black"
                 android:backgroundTint="@color/op_gray">
             </Button>
@@ -108,6 +113,7 @@
                 android:layout_width="30pt"
                 android:layout_margin="1pt"
                 android:text="C"
+                android:onClick="btnCClick"
                 android:textColor="@color/black"
                 android:backgroundTint="@color/op_gray">
             </Button>
@@ -118,6 +124,7 @@
                 android:layout_width="30pt"
                 android:layout_margin="1pt"
                 android:text="back"
+                android:onClick="btnBackClick"
                 android:textColor="@color/black"
                 android:backgroundTint="@color/op_gray">
             </Button>
@@ -128,7 +135,7 @@
                 android:layout_width="30pt"
                 android:layout_margin="1pt"
                 android:text="/"
-                android:onClick="opBtnOnClick"
+                android:onClick="btnDivideClick"
                 android:textColor="@color/black"
                 android:backgroundTint="@color/op_gray">
             </Button>
@@ -144,7 +151,7 @@
                 android:layout_width="30pt"
                 android:layout_margin="1pt"
                 android:text="7"
-                android:onClick="numBtnOnClick"
+                android:onClick="btn7Click"
                 android:textColor="@color/black"
                 android:backgroundTint="@color/number_gray">
             </Button>
@@ -155,7 +162,7 @@
                 android:layout_width="30pt"
                 android:layout_margin="1pt"
                 android:text="8"
-                android:onClick="numBtnOnClick"
+                android:onClick="btn8Click"
                 android:textColor="@color/black"
                 android:backgroundTint="@color/number_gray">
             </Button>
@@ -166,7 +173,7 @@
                 android:layout_width="30pt"
                 android:layout_margin="1pt"
                 android:text="9"
-                android:onClick="numBtnOnClick"
+                android:onClick="btn9Click"
                 android:textColor="@color/black"
                 android:backgroundTint="@color/number_gray">
             </Button>
@@ -177,7 +184,7 @@
                 android:layout_width="30pt"
                 android:layout_margin="1pt"
                 android:text="X"
-                android:onClick="opBtnOnClick"
+                android:onClick="btnMultClick"
                 android:textColor="@color/black"
                 android:backgroundTint="@color/op_gray">
             </Button>
@@ -192,7 +199,7 @@
                 android:layout_width="30pt"
                 android:layout_margin="1pt"
                 android:text="4"
-                android:onClick="numBtnOnClick"
+                android:onClick="btn4Click"
                 android:textColor="@color/black"
                 android:backgroundTint="@color/number_gray">
             </Button>
@@ -203,7 +210,7 @@
                 android:layout_width="30pt"
                 android:layout_margin="1pt"
                 android:text="5"
-                android:onClick="numBtnOnClick"
+                android:onClick="btn5Click"
                 android:textColor="@color/black"
                 android:backgroundTint="@color/number_gray">
             </Button>
@@ -214,7 +221,7 @@
                 android:layout_width="30pt"
                 android:layout_margin="1pt"
                 android:text="6"
-                android:onClick="numBtnOnClick"
+                android:onClick="btn6Click"
                 android:textColor="@color/black"
                 android:backgroundTint="@color/number_gray">
             </Button>
@@ -225,7 +232,7 @@
                 android:layout_width="30pt"
                 android:layout_margin="1pt"
                 android:text="-"
-                android:onClick="opBtnOnClick"
+                android:onClick="btnSubClick"
                 android:textColor="@color/black"
                 android:backgroundTint="@color/op_gray">
             </Button>
@@ -240,7 +247,7 @@
                 android:layout_width="30pt"
                 android:layout_margin="1pt"
                 android:text="1"
-                android:onClick="numBtnOnClick"
+                android:onClick="btn1Click"
                 android:textColor="@color/black"
                 android:backgroundTint="@color/number_gray">
             </Button>
@@ -251,7 +258,7 @@
                 android:layout_width="30pt"
                 android:layout_margin="1pt"
                 android:text="2"
-                android:onClick="numBtnOnClick"
+                android:onClick="btn2Click"
                 android:textColor="@color/black"
                 android:backgroundTint="@color/number_gray">
             </Button>
@@ -262,7 +269,7 @@
                 android:layout_width="30pt"
                 android:layout_margin="1pt"
                 android:text="3"
-                android:onClick="numBtnOnClick"
+                android:onClick="btn3Click"
                 android:textColor="@color/black"
                 android:backgroundTint="@color/number_gray">
             </Button>
@@ -273,7 +280,7 @@
                 android:layout_width="30pt"
                 android:layout_margin="1pt"
                 android:text="+"
-                android:onClick="opBtnOnClick"
+                android:onClick="btnAddClick"
                 android:textColor="@color/black"
                 android:backgroundTint="@color/op_gray">
             </Button>
@@ -288,7 +295,7 @@
                 android:layout_width="30pt"
                 android:layout_margin="1pt"
                 android:text="+/-"
-                android:onClick="numBtnOnClick"
+                android:onClick="btnPlusMinClick"
                 android:textColor="@color/black"
                 android:backgroundTint="@color/op_gray">
             </Button>
@@ -299,7 +306,7 @@
                 android:layout_width="30pt"
                 android:layout_margin="1pt"
                 android:text="0"
-                android:onClick="numBtnOnClick"
+                android:onClick="btn0Click"
                 android:textColor="@color/black"
                 android:backgroundTint="@color/number_gray">
             </Button>
@@ -310,7 +317,7 @@
                 android:layout_width="30pt"
                 android:layout_margin="1pt"
                 android:text="."
-                android:onClick="numBtnOnClick"
+                android:onClick="btnDecClick"
                 android:textColor="@color/black"
                 android:backgroundTint="@color/op_gray">
             </Button>
@@ -321,19 +328,11 @@
                 android:layout_width="30pt"
                 android:layout_margin="1pt"
                 android:text="="
+                android:onClick="btnEqualClick"
                 android:textColor="@color/black"
                 android:backgroundTint="@color/op_gray">
             </Button>
         </TableRow>
 
     </TableLayout>
-
-    <EditText
-        android:id="@+id/editTextTextPersonName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Name" />
 </LinearLayout>
