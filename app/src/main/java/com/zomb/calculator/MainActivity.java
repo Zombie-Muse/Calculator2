@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import java.math.BigDecimal;
 
+import static java.lang.Math.*;
+
 public class MainActivity extends AppCompatActivity {
     // Initialize variables
 
@@ -145,6 +147,9 @@ public class MainActivity extends AppCompatActivity {
     }
     //todo: add square root functionality
     public void btnRootClick(View view) {
+        double op = Double.parseDouble(display.getText().toString());
+        op = sqrt(op);
+        display.setText(String.valueOf(op));
     }
     //todo: add square functionality
     public void btnSqrClick(View view) {
