@@ -15,7 +15,7 @@ import static java.lang.Math.*;
 public class MainActivity extends AppCompatActivity {
     // Initialize variables
 
-    double num1, num2, result;
+    double num1, num2, result, prcnt;
     TextView display, statement;
     boolean add, sub, mult, div, deci, percent, root, sqr, oneX, isNewClick;
     String answer, operation;
@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        percent = false;
         deci = false;
         isNewClick = true;  // sets whether or not the button click is the first click. Gets rid of the default 0 when numbers are entered
 
@@ -140,25 +141,33 @@ public class MainActivity extends AppCompatActivity {
         display.setText(number);
     }
     public void btnPercentClick(View view) {
-        num1 = Double.parseDouble(display.getText().toString());
-        display.setText("");
-        operation = "%";
-        isNewClick = true;
+        num2 = Double.parseDouble(display.getText().toString());
+        prcnt = (num1 * (num2 / 100));
+        display.setText(String.valueOf(prcnt));
+        percent = true;
+//        isNewClick = true;
     }
-    //todo: add square root functionality
     public void btnRootClick(View view) {
         double op = Double.parseDouble(display.getText().toString());
         op = sqrt(op);
         display.setText(String.valueOf(op));
+        isNewClick = true;
     }
-    //todo: add square functionality
     public void btnSqrClick(View view) {
+        double op = Double.parseDouble(display.getText().toString());
+        op = (op * op);
+        display.setText(String.valueOf(op));
+        isNewClick = true;
     }
-    // todo: add 1/x functionality
     public void btnOneXClick(View view) {
+        double op = Double.parseDouble(display.getText().toString());
+        op = (1 / op);
+        display.setText(String.valueOf(op));
+        isNewClick = true;
     }
-    // todo: add clear expression functionality (does not clear entire calculation, only display)
     public void btnCeClick(View view) {
+        display.setText("0");
+        isNewClick = true;
     }
     public void btnCClick(View view) {
         display.setText("0");
@@ -179,29 +188,24 @@ public class MainActivity extends AppCompatActivity {
     }
     public void btnDivideClick(View view) {
         num1 = Double.parseDouble(display.getText().toString());
-//        display.setText("");
         operation = "/";
         isNewClick = true;
     }
     public void btnMultClick(View view) {
         num1 = Double.parseDouble(display.getText().toString());
-//        display.setText("");
         operation = "*";
         isNewClick = true;
     }
     public void btnAddClick(View view) {
         num1 = Double.parseDouble(display.getText().toString());
-//        display.setText("");
         operation = "+";
         isNewClick = true;
     }
     public void btnSubClick(View view) {
         num1 = Double.parseDouble(display.getText().toString());
-//        display.setText("");
         operation = "-";
         isNewClick = true;
     }
-    // todo: add plus minus functionality
     public void btnPlusMinClick(View view) {
         double op = Double.parseDouble(display.getText().toString());
         op = op * (-1);
@@ -217,36 +221,50 @@ public class MainActivity extends AppCompatActivity {
         num2 = Double.parseDouble(display.getText().toString());
 
         if (operation == "+") {
-            result = num1 + num2;
+            if (percent == true) {
+                result = prcnt + num1;
+            } else {
+                result = num1 + num2;
+            }
             answer = String.valueOf(result);
             display.setText(answer);
             isNewClick = true;
+            percent = false;
         } else if (operation == "-") {
-            result = num1 - num2;
+            if (percent == true) {
+                result = num1 - prcnt;
+            } else {
+                result = num1 - num2;
+            }
             answer = String.valueOf(result);
             display.setText(answer);
             isNewClick = true;
+            percent = false;
         } else if (operation == "/") {
-            result = num1 / num2;
+            if (percent == true) {
+                result = num1 / prcnt;
+            } else {
+                result = num1 / num2;
+            }
             answer = String.valueOf(result);
             display.setText(answer);
             isNewClick = true;
+            percent = false;
         } else if (operation == "*") {
-            result = num1 * num2;
+            if (percent == true) {
+                result = prcnt * num1;
+            } else {
+                result = num1 * num2;
+            }
             answer = String.valueOf(result);
             display.setText(answer);
             isNewClick = true;
-
-            // fixme: needs proper calculation
-        } else if (operation == "%") {
-            double num = Double.parseDouble(display.getText().toString());
-            result = num / 100;
-            answer = String.valueOf(result);
-            display.setText(answer);
-            isNewClick = true;
+            percent = false;
         }
     }
 
     // todo: add history view
     // todo: add state handling
+    // todo: allow for complete answer to fit in display. Round after a certain amount of digits and make the font smaller to allow more digits
+
 }
