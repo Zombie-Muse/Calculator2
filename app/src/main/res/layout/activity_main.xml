@@ -74,7 +74,7 @@
                 android:layout_height="30pt"
                 android:layout_width="30pt"
                 android:layout_margin="1pt"
-                android:text="sqr"
+                android:text="x\u00B2"
                 android:onClick="btnSqrClick"
                 android:textColor="@color/black"
                 android:backgroundTint="@color/op_gray">
@@ -85,7 +85,7 @@
                 android:layout_height="30pt"
                 android:layout_width="30pt"
                 android:layout_margin="1pt"
-                android:text="1/x"
+                android:text="¹⁄ₓ"
                 android:onClick="btnOneXClick"
                 android:textColor="@color/black"
                 android:backgroundTint="@color/op_gray">
@@ -123,7 +123,7 @@
                 android:layout_height="30pt"
                 android:layout_width="30pt"
                 android:layout_margin="1pt"
-                android:text="back"
+                android:text="\u232b"
                 android:onClick="btnBackClick"
                 android:textColor="@color/black"
                 android:backgroundTint="@color/op_gray">
@@ -134,7 +134,7 @@
                 android:layout_height="30pt"
                 android:layout_width="30pt"
                 android:layout_margin="1pt"
-                android:text="/"
+                android:text="\u00f7"
                 android:onClick="btnDivideClick"
                 android:textColor="@color/black"
                 android:backgroundTint="@color/op_gray">
@@ -183,7 +183,7 @@
                 android:layout_height="30pt"
                 android:layout_width="30pt"
                 android:layout_margin="1pt"
-                android:text="X"
+                android:text="\u00d7"
                 android:onClick="btnMultClick"
                 android:textColor="@color/black"
                 android:backgroundTint="@color/op_gray">
