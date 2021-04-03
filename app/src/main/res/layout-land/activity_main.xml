@@ -6,35 +6,35 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".MainActivity">
+    
+<!--    <RelativeLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:background="@color/bg_gray">-->
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/bg_gray">
-
-        <Button
-            android:id="@+id/btn_history"
-            android:layout_width="60pt"
-            android:layout_height="20pt"
-            android:layout_margin="1pt"
-            android:backgroundTint="@color/number_gray"
-            android:onClick="btnHistClick"
-            android:text="History"
-            android:textColor="@color/black" />
+<!--&lt;!&ndash;        <Button&ndash;&gt;-->
+<!--&lt;!&ndash;            android:id="@+id/btn_history"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:layout_width="60pt"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:layout_height="20pt"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:layout_margin="1pt"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:backgroundTint="@color/number_gray"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:onClick="btnHistClick"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:text="History"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:textColor="@color/black" />&ndash;&gt;-->
 
 
-        <TextView
-            android:id="@+id/calculation"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_weight="1"
-            android:layout_toRightOf="@id/btn_history"
-            android:background="@color/bg_gray"
-            android:ems="10"
-            android:gravity="right"
-            android:inputType="textPersonName"
-            android:text="0" />
-    </RelativeLayout>
+<!--&lt;!&ndash;        <TextView&ndash;&gt;-->
+<!--&lt;!&ndash;            android:id="@+id/calculation"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:layout_width="match_parent"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:layout_height="40dp"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:layout_weight="1"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:layout_toRightOf="@id/btn_history"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:background="@color/bg_gray"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:ems="10"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:gravity="right"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:inputType="textPersonName"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:text="0" />&ndash;&gt;-->
+<!--    </RelativeLayout>-->
 
     <TextView
         android:id="@+id/display"
@@ -62,8 +62,8 @@
             <Button
                 android:id="@+id/btn_percent"
                 android:layout_weight="1"
-                android:layout_height="30pt"
-                android:layout_width="30pt"
+                android:layout_height="15pt"
+                android:layout_width="20pt"
                 android:layout_margin="1pt"
                 android:text="%"
                 android:onClick="btnPercentClick"
@@ -73,8 +73,8 @@
             <Button
                 android:id="@+id/btn_root"
                 android:layout_weight="1"
-                android:layout_height="30pt"
-                android:layout_width="30pt"
+                android:layout_height="15pt"
+                android:layout_width="20pt"
                 android:layout_margin="1pt"
                 android:text="\u221A"
                 android:onClick="btnRootClick"
@@ -84,8 +84,8 @@
             <Button
                 android:id="@+id/btn_square"
                 android:layout_weight="1"
-                android:layout_height="30pt"
-                android:layout_width="30pt"
+                android:layout_height="15pt"
+                android:layout_width="20pt"
                 android:layout_margin="1pt"
                 android:text="x\u00B2"
                 android:onClick="btnSqrClick"
@@ -95,14 +95,23 @@
             <Button
                 android:id="@+id/btn_onex"
                 android:layout_weight="1"
-                android:layout_height="30pt"
-                android:layout_width="30pt"
+                android:layout_height="15pt"
+                android:layout_width="20pt"
                 android:layout_margin="1pt"
                 android:text="¹⁄ₓ"
                 android:onClick="btnOneXClick"
                 android:textColor="@color/black"
                 android:backgroundTint="@color/op_gray">
             </Button>
+            <Button
+                android:id="@+id/btn_history"
+                android:layout_width="50pt"
+                android:layout_height="15pt"
+                android:layout_margin="1pt"
+                android:backgroundTint="@color/number_gray"
+                android:onClick="btnHistClick"
+                android:text="History"
+                android:textColor="@color/black" />
         </TableRow>
 
         <TableRow
@@ -111,8 +120,8 @@
             <Button
                 android:id="@+id/btn_ce"
                 android:layout_weight="1"
-                android:layout_height="30pt"
-                android:layout_width="30pt"
+                android:layout_height="15pt"
+                android:layout_width="20pt"
                 android:layout_margin="1pt"
                 android:text="CE"
                 android:onClick="btnCeClick"
@@ -122,8 +131,8 @@
             <Button
                 android:id="@+id/btn_c"
                 android:layout_weight="1"
-                android:layout_height="30pt"
-                android:layout_width="30pt"
+                android:layout_height="15pt"
+                android:layout_width="20pt"
                 android:layout_margin="1pt"
                 android:text="C"
                 android:onClick="btnCClick"
@@ -133,8 +142,8 @@
             <Button
                 android:id="@+id/btn_back"
                 android:layout_weight="1"
-                android:layout_height="30pt"
-                android:layout_width="30pt"
+                android:layout_height="15pt"
+                android:layout_width="20pt"
                 android:layout_margin="1pt"
                 android:text="\u232b"
                 android:onClick="btnBackClick"
@@ -144,8 +153,8 @@
             <Button
                 android:id="@+id/btn_divide"
                 android:layout_weight="1"
-                android:layout_height="30pt"
-                android:layout_width="30pt"
+                android:layout_height="15pt"
+                android:layout_width="20pt"
                 android:layout_margin="1pt"
                 android:text="\u00f7"
                 android:onClick="btnDivideClick"
@@ -160,8 +169,8 @@
             <Button
                 android:id="@+id/btn_seven"
                 android:layout_weight="1"
-                android:layout_height="30pt"
-                android:layout_width="30pt"
+                android:layout_height="15pt"
+                android:layout_width="20pt"
                 android:layout_margin="1pt"
                 android:text="7"
                 android:onClick="btn7Click"
@@ -171,8 +180,8 @@
             <Button
                 android:id="@+id/btn_eight"
                 android:layout_weight="1"
-                android:layout_height="30pt"
-                android:layout_width="30pt"
+                android:layout_height="15pt"
+                android:layout_width="20pt"
                 android:layout_margin="1pt"
                 android:text="8"
                 android:onClick="btn8Click"
@@ -182,8 +191,8 @@
             <Button
                 android:id="@+id/btn_nine"
                 android:layout_weight="1"
-                android:layout_height="30pt"
-                android:layout_width="30pt"
+                android:layout_height="15pt"
+                android:layout_width="20pt"
                 android:layout_margin="1pt"
                 android:text="9"
                 android:onClick="btn9Click"
@@ -193,8 +202,8 @@
             <Button
                 android:id="@+id/btn_multiply"
                 android:layout_weight="1"
-                android:layout_height="30pt"
-                android:layout_width="30pt"
+                android:layout_height="15pt"
+                android:layout_width="20pt"
                 android:layout_margin="1pt"
                 android:text="\u00d7"
                 android:onClick="btnMultClick"
@@ -208,8 +217,8 @@
             <Button
                 android:id="@+id/btn_four"
                 android:layout_weight="1"
-                android:layout_height="30pt"
-                android:layout_width="30pt"
+                android:layout_height="15pt"
+                android:layout_width="20pt"
                 android:layout_margin="1pt"
                 android:text="4"
                 android:onClick="btn4Click"
@@ -219,8 +228,8 @@
             <Button
                 android:id="@+id/btn_five"
                 android:layout_weight="1"
-                android:layout_height="30pt"
-                android:layout_width="30pt"
+                android:layout_height="15pt"
+                android:layout_width="20pt"
                 android:layout_margin="1pt"
                 android:text="5"
                 android:onClick="btn5Click"
@@ -230,8 +239,8 @@
             <Button
                 android:id="@+id/btn_six"
                 android:layout_weight="1"
-                android:layout_height="30pt"
-                android:layout_width="30pt"
+                android:layout_height="15pt"
+                android:layout_width="20pt"
                 android:layout_margin="1pt"
                 android:text="6"
                 android:onClick="btn6Click"
@@ -241,8 +250,8 @@
             <Button
                 android:id="@+id/btn_subtract"
                 android:layout_weight="1"
-                android:layout_height="30pt"
-                android:layout_width="30pt"
+                android:layout_height="15pt"
+                android:layout_width="20pt"
                 android:layout_margin="1pt"
                 android:text="-"
                 android:onClick="btnSubClick"
@@ -256,8 +265,8 @@
             <Button
                 android:id="@+id/btn_one"
                 android:layout_weight="1"
-                android:layout_height="30pt"
-                android:layout_width="30pt"
+                android:layout_height="15pt"
+                android:layout_width="20pt"
                 android:layout_margin="1pt"
                 android:text="1"
                 android:onClick="btn1Click"
@@ -267,8 +276,8 @@
             <Button
                 android:id="@+id/btn_two"
                 android:layout_weight="1"
-                android:layout_height="30pt"
-                android:layout_width="30pt"
+                android:layout_height="15pt"
+                android:layout_width="20pt"
                 android:layout_margin="1pt"
                 android:text="2"
                 android:onClick="btn2Click"
@@ -278,8 +287,8 @@
             <Button
                 android:id="@+id/btn_three"
                 android:layout_weight="1"
-                android:layout_height="30pt"
-                android:layout_width="30pt"
+                android:layout_height="15pt"
+                android:layout_width="20pt"
                 android:layout_margin="1pt"
                 android:text="3"
                 android:onClick="btn3Click"
@@ -289,8 +298,8 @@
             <Button
                 android:id="@+id/btn_add"
                 android:layout_weight="1"
-                android:layout_height="30pt"
-                android:layout_width="30pt"
+                android:layout_height="15pt"
+                android:layout_width="20pt"
                 android:layout_margin="1pt"
                 android:text="+"
                 android:onClick="btnAddClick"
@@ -304,8 +313,8 @@
             <Button
                 android:id="@+id/btn_plusminus"
                 android:layout_weight="1"
-                android:layout_height="30pt"
-                android:layout_width="30pt"
+                android:layout_height="15pt"
+                android:layout_width="20pt"
                 android:layout_margin="1pt"
                 android:text="+/-"
                 android:onClick="btnPlusMinClick"
@@ -315,8 +324,8 @@
             <Button
                 android:id="@+id/btn_zero"
                 android:layout_weight="1"
-                android:layout_height="30pt"
-                android:layout_width="30pt"
+                android:layout_height="15pt"
+                android:layout_width="20pt"
                 android:layout_margin="1pt"
                 android:text="0"
                 android:onClick="btn0Click"
@@ -326,8 +335,8 @@
             <Button
                 android:id="@+id/btn_point"
                 android:layout_weight="1"
-                android:layout_height="30pt"
-                android:layout_width="30pt"
+                android:layout_height="15pt"
+                android:layout_width="20pt"
                 android:layout_margin="1pt"
                 android:text="."
                 android:onClick="btnDecClick"
@@ -337,8 +346,8 @@
             <Button
                 android:id="@+id/btn_equals"
                 android:layout_weight="1"
-                android:layout_height="30pt"
-                android:layout_width="30pt"
+                android:layout_height="15pt"
+                android:layout_width="20pt"
                 android:layout_margin="1pt"
                 android:text="="
                 android:onClick="btnEqualClick"
