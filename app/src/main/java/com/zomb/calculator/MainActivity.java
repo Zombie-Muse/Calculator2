@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import java.io.BufferedReader;
@@ -23,36 +22,28 @@ import java.math.BigDecimal;
 import static java.lang.Math.*;
 
 public class MainActivity extends AppCompatActivity {
-    // Initialize variables
-    private final String KEY_SAVED_CALCULATION = "savedCalculation";
-    private final String KEY_NUM1 = "savedNum1";
-    private final String KEY_NUM2 = "savedNum2";
-    private final String KEY_HISTORY = "savedHistory";
-    private String mSavedCalculation;
-    private String mSavedHistory;
+    public static final String KEY_DISPLAY = "KEY_DISPLAY";
+    public static final String KEY_STATEMENT = "KEY_STATEMENT";
 
+    // Initialize variables
     double num1, num2, result, prcnt;
     TextView display, statement;
     boolean deci, percent, isNewClick;
     String answer, operation;
     StringBuilder str = new StringBuilder();
-    Button btn_1, btn_2, btn_3, btn_4, btn_5, btn_6, btn_7, btn_8, btn_9, btn_0, btn_decimal, btn_add, btn_subtract, btn_multiply, btn_divide, btn_plusminus, btn_percent, btn_root, btn_sqr, btn_1x, btn_ce, btn_c, btn_back, btn_equal;
+    Button btn_1, btn_2, btn_3, btn_4, btn_5, btn_6, btn_7, btn_8, btn_9, btn_0, btn_decimal, btn_add, btn_subtract, btn_multiply, btn_divide, btn_plusminus, btn_percent, btn_root, btn_sqr, btn_1x, btn_ce, btn_c, btn_back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        if (savedInstanceState != null) {
-//            mSavedCalculation = savedInstanceState.getString(KEY_SAVED_CALCULATION);
-//            mSavedHistory = savedInstanceState.getString(KEY_HISTORY);
-//            num1 = savedInstanceState.getDouble(KEY_NUM1);
-//            num2 = savedInstanceState.getDouble(KEY_NUM2);
-//            display.setText(mSavedCalculation);
-//            statement.setText(mSavedHistory);
-//
-//        }
+        if (savedInstanceState != null) {
+            display.setText(savedInstanceState.getString(KEY_DISPLAY));
+            statement.setText(savedInstanceState.getString(KEY_STATEMENT));
+        }
 
+        // initializes everything (no percent sign, no decimal, and the next click will be a new click)
         percent = false;
         deci = false;
         isNewClick = true;  // sets whether or not the button click is the first click. Gets rid of the default 0 when numbers are entered
@@ -83,51 +74,27 @@ public class MainActivity extends AppCompatActivity {
         btn_divide = (Button) findViewById(R.id.btn_divide);
 
         // sets the main display and the line showing calculations
-        display = findViewById(R.id.display);
-        statement = findViewById(R.id.calculation); // fixme: create a stringbuilder to store the entire calculation then save it to file
-
-        //restore state
-        if (savedInstanceState != null) {
-//            mSavedCalculation = savedInstanceState.getString(KEY_SAVED_CALCULATION);
-//            mSavedHistory = savedInstanceState.getString(KEY_HISTORY);
-//            num1 = savedInstanceState.getDouble(KEY_NUM1);
-//            num2 = savedInstanceState.getDouble(KEY_NUM2);
-//            display.setText(mSavedCalculation);
-//            statement.setText(mSavedHistory);
-
-        }
-
+        display = (TextView) findViewById(R.id.display);
+        statement = (TextView) findViewById(R.id.calculation);
     }
+
     @Override
-    public void onSaveInstanceState(@NonNull Bundle outState) {
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-
-        final TextView displayText = (TextView) findViewById(R.id.display);
-        CharSequence cs = displayText.getText();
-        outState.putCharSequence("hist", cs);
-//        outState.putString(KEY_SAVED_CALCULATION, mSavedCalculation);
-//        outState.putDouble(KEY_NUM1, num1);
-//        outState.putDouble(KEY_NUM2, num2);
-//        mSavedHistory = str.toString();
-//        outState.putString(KEY_HISTORY, mSavedHistory);
+        outState.putString(KEY_DISPLAY, display.getText().toString());
+        outState.putString(KEY_STATEMENT, statement.getText().toString());
+//        String saveDisplay = display.getText().toString();
+//        savedInstanceState.putString("SaveDisplay", saveDisplay);
+//        String saveStatement = statement.getText().toString();
+//        savedInstanceState.putString("SaveStatement", saveStatement);
     }
 
-    @Override
-    public void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-
-        final TextView displayText = (TextView) findViewById(R.id.display);
-        CharSequence cs = savedInstanceState.getCharSequence("hist");
-
-        displayText.setText(cs);
-//        mSavedCalculation = savedInstanceState.getString(KEY_SAVED_CALCULATION);
-//        mSavedHistory = savedInstanceState.getString(KEY_HISTORY);
-//        num1 = savedInstanceState.getDouble(KEY_NUM1);
-//        num2 = savedInstanceState.getDouble(KEY_NUM2);
-//        display.setText(mSavedCalculation);
-//        statement.setText(mSavedHistory);
-//
-    }
+//    @Override
+//    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+//        super.onRestoreInstanceState(savedInstanceState);
+//        display.setText(savedInstanceState.getString("SaveDisplay"));
+//        statement.setText(savedInstanceState.getString("SaveStatement"));
+//    }
 
     public void btn1Click(View view) {
         if (isNewClick) {
@@ -137,9 +104,8 @@ public class MainActivity extends AppCompatActivity {
         }
         String number = (display.getText().toString() + btn_1.getText().toString());
         display.setText(number);
-//        str.append(number);
-        
     }
+
     public void btn2Click(View view) {
         if (isNewClick) {
             display.setText("");
@@ -148,7 +114,6 @@ public class MainActivity extends AppCompatActivity {
         }
         String number = (display.getText().toString() + btn_2.getText().toString());
         display.setText(number);
-//        str.append(number);
     }
     public void btn3Click(View view) {
         if (isNewClick) {
@@ -158,7 +123,6 @@ public class MainActivity extends AppCompatActivity {
         }
         String number = (display.getText().toString() + btn_3.getText().toString());
         display.setText(number);
-//        str.append(number);
     }
     public void btn4Click(View view) {
         if (isNewClick) {
@@ -168,7 +132,6 @@ public class MainActivity extends AppCompatActivity {
         }
         String number = (display.getText().toString() + btn_4.getText().toString());
         display.setText(number);
-//        str.append(number);
     }
     public void btn5Click(View view) {
         if (isNewClick) {
@@ -178,7 +141,6 @@ public class MainActivity extends AppCompatActivity {
         }
         String number = (display.getText().toString() + btn_5.getText().toString());
         display.setText(number);
-//        str.append(number);
     }
     public void btn6Click(View view) {
         if (isNewClick) {
@@ -188,7 +150,6 @@ public class MainActivity extends AppCompatActivity {
         }
         String number = (display.getText().toString() + btn_6.getText().toString());
         display.setText(number);
-//        str.append(number);
     }
     public void btn7Click(View view) {
         if (isNewClick) {
@@ -198,7 +159,6 @@ public class MainActivity extends AppCompatActivity {
         }
         String number = (display.getText().toString() + btn_7.getText().toString());
         display.setText(number);
-//        str.append(number);
     }
     public void btn8Click(View view) {
         if (isNewClick) {
@@ -208,7 +168,6 @@ public class MainActivity extends AppCompatActivity {
         }
         String number = (display.getText().toString() + btn_8.getText().toString());
         display.setText(number);
-//        str.append(number);
     }
     public void btn9Click(View view) {
         if (isNewClick) {
@@ -218,7 +177,6 @@ public class MainActivity extends AppCompatActivity {
         }
         String number = (display.getText().toString() + btn_9.getText().toString());
         display.setText(number);
-//        str.append(number);
     }
     public void btn0Click(View view) {
         if (isNewClick) {
@@ -228,7 +186,6 @@ public class MainActivity extends AppCompatActivity {
         }
         String number = (display.getText().toString() + btn_0.getText().toString());
         display.setText(number);
-//        str.append(number);
     }
     public void btnPercentClick(View view) {
         num2 = Double.parseDouble(display.getText().toString());
@@ -267,9 +224,11 @@ public class MainActivity extends AppCompatActivity {
         display.setText("0");
         num1 = 0.0;
         num2 = 0.0;
-        isNewClick = true;
-        str.delete(0, str.length() - 1);
+        if (str.length() != 0) {
+            str.delete(0, str.length() - 1);
+        }
         statement.setText("");
+        isNewClick = true;
     }
     public void btnBackClick(View view) {
         String backspace = null;
@@ -279,7 +238,6 @@ public class MainActivity extends AppCompatActivity {
             back.deleteCharAt(display.getText().length() - 1);
             backspace = back.toString();
             display.setText(backspace);
-//            str.deleteCharAt(display.getText().length() - 1);
         }
         isNewClick = true;
     }
@@ -287,6 +245,7 @@ public class MainActivity extends AppCompatActivity {
         num1 = Double.parseDouble(display.getText().toString());
         operation = "/";
         str.append(num1 + " " + operation + " ");
+        statement.setText(str.toString());
         isNewClick = true;
     }
     public void btnMultClick(View view) {
@@ -294,17 +253,20 @@ public class MainActivity extends AppCompatActivity {
         operation = "*";
         str.append(num1 + " " + operation + " ");
         isNewClick = true;
+        statement.setText(str.toString());
     }
     public void btnAddClick(View view) {
         num1 = Double.parseDouble(display.getText().toString());
         operation = "+";
         str.append(num1 + " " + operation + " ");
+        statement.setText(str.toString());
         isNewClick = true;
     }
     public void btnSubClick(View view) {
         num1 = Double.parseDouble(display.getText().toString());
         operation = "-";
         str.append(num1 + " " + operation + " ");
+        statement.setText(str.toString());
         isNewClick = true;
     }
     public void btnPlusMinClick(View view) {
@@ -312,6 +274,7 @@ public class MainActivity extends AppCompatActivity {
         op = op * (-1);
         display.setText(String.valueOf(op));
         str.append(display.getText().toString());
+        statement.setText(str.toString());
     }
     public void btnDecClick(View view) {
         if (!display.getText().toString().contains(".")) {
@@ -368,19 +331,16 @@ public class MainActivity extends AppCompatActivity {
             isNewClick = true;
             percent = false;
         }
-        str.append( num2 + " " + "=" + " " + answer + " ");
-        statement.setText(str);
+        str.append( num2 + " = " + answer + " ");
+        statement.setText(str + "\n");
         writeToInternalFile(str.toString());
-//        FileOutputStream hist = null;
-//        hist = openFileOutput("Calculator History", MODE_APPEND);
-//        hist.write(str.toString().getBytes());
+        str.delete(0, str.length() - 1);
     }
 
     public void btnHistClick(View view) {
         Intent intent = new Intent(this, HistoryActivity.class);
         startActivity(intent);
     }
-    // fixme: make spaces between numbers and operators
     private void writeToInternalFile(String str) throws IOException {
         FileOutputStream outputStream = openFileOutput("history", Context.MODE_APPEND);
         PrintWriter writer = new PrintWriter(outputStream);
@@ -389,28 +349,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    // todo: move this to HistoryActivity
-    private String readFromInternalFile() throws IOException {
-        FileInputStream inputStream = openFileInput("history");
-        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-
-        StringBuilder stringBuilder = new StringBuilder();
-
-        try {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                stringBuilder.append(line).append('\n');
-            }
-        }
-        finally {
-            reader.close();
-        }
-
-        return stringBuilder.toString();
-    }
 
 
-    // todo: add history layout
-    // todo: add state handling
+
+    // fixme: add state handling
 
 }
