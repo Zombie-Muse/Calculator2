@@ -38,11 +38,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        if (savedInstanceState != null) {
-            display.setText(savedInstanceState.getString(KEY_DISPLAY));
-            statement.setText(savedInstanceState.getString(KEY_STATEMENT));
-        }
-
         // initializes everything (no percent sign, no decimal, and the next click will be a new click)
         percent = false;
         deci = false;
@@ -72,29 +67,23 @@ public class MainActivity extends AppCompatActivity {
         btn_subtract = (Button) findViewById(R.id.btn_subtract);
         btn_multiply = (Button) findViewById(R.id.btn_multiply);
         btn_divide = (Button) findViewById(R.id.btn_divide);
-
-        // sets the main display and the line showing calculations
         display = (TextView) findViewById(R.id.display);
         statement = (TextView) findViewById(R.id.calculation);
+
+        if (savedInstanceState != null) {
+            display.setText(savedInstanceState.getString(KEY_DISPLAY));
+            statement.setText(savedInstanceState.getString(KEY_STATEMENT));
+        }
     }
 
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putString(KEY_DISPLAY, display.getText().toString());
-        outState.putString(KEY_STATEMENT, statement.getText().toString());
-//        String saveDisplay = display.getText().toString();
-//        savedInstanceState.putString("SaveDisplay", saveDisplay);
-//        String saveStatement = statement.getText().toString();
-//        savedInstanceState.putString("SaveStatement", saveStatement);
+        String savedDisplay = display.getText().toString();
+        String savedStatement = statement.getText().toString();
+        outState.putString(KEY_DISPLAY, savedDisplay);
+        outState.putString(KEY_STATEMENT, savedStatement);
     }
-
-//    @Override
-//    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
-//        super.onRestoreInstanceState(savedInstanceState);
-//        display.setText(savedInstanceState.getString("SaveDisplay"));
-//        statement.setText(savedInstanceState.getString("SaveStatement"));
-//    }
 
     public void btn1Click(View view) {
         if (isNewClick) {
@@ -187,13 +176,17 @@ public class MainActivity extends AppCompatActivity {
         String number = (display.getText().toString() + btn_0.getText().toString());
         display.setText(number);
     }
+    // todo: percentage history
     public void btnPercentClick(View view) {
+        operation = "%";
         num2 = Double.parseDouble(display.getText().toString());
         prcnt = (num1 * (num2 / 100));
         display.setText(String.valueOf(prcnt));
-        str.append(display.getText().toString());
+        str.replace(str.length() - 1, str.length(), Double.toString(prcnt));
         percent = true;
     }
+
+    //todo: square root history
     public void btnRootClick(View view) {
         num1 = Double.parseDouble(display.getText().toString());
         double op = Double.parseDouble(display.getText().toString());
@@ -202,6 +195,7 @@ public class MainActivity extends AppCompatActivity {
         str.append(display.getText().toString());
         isNewClick = true;
     }
+    //todo: square history
     public void btnSqrClick(View view) {
         double op = Double.parseDouble(display.getText().toString());
         op = (op * op);
@@ -209,6 +203,7 @@ public class MainActivity extends AppCompatActivity {
         str.append(display.getText().toString());
         isNewClick = true;
     }
+    //todo: 1/x history
     public void btnOneXClick(View view) {
         double op = Double.parseDouble(display.getText().toString());
         op = (1 / op);
@@ -287,49 +282,54 @@ public class MainActivity extends AppCompatActivity {
     public void btnEqualClick(View view) throws IOException {
         num2 = Double.parseDouble(display.getText().toString());
 
-        if (operation == "+") {
-            if (isNewClick) {
-                num1 = result;
-            }
-            if (percent == true) {
-                result = prcnt + num1;
-            } else {
-                result = num1 + num2;
-            }
-            answer = String.valueOf(result);
-            display.setText(answer);
-            isNewClick = true;
-            percent = false;
-        } else if (operation == "-") {
-            if (percent == true) {
-                result = num1 - prcnt;
-            } else {
-                result = num1 - num2;
-            }
-            answer = String.valueOf(result);
-            display.setText(answer);
-            isNewClick = true;
-            percent = false;
-        } else if (operation == "/") {
-            if (percent == true) {
-                result = num1 / prcnt;
-            } else {
-                result = num1 / num2;
-            }
-            answer = String.valueOf(result);
-            display.setText(answer);
-            isNewClick = true;
-            percent = false;
-        } else if (operation == "*") {
-            if (percent == true) {
-                result = prcnt * num1;
-            } else {
-                result = num1 * num2;
-            }
-            answer = String.valueOf(result);
-            display.setText(answer);
-            isNewClick = true;
-            percent = false;
+        switch (operation) {
+            case "+":
+                if (isNewClick) {
+                    num1 = result;
+                }
+                if (percent == true) {
+                    result = prcnt + num1;
+                } else {
+                    result = num1 + num2;
+                }
+                answer = String.valueOf(result);
+                display.setText(answer);
+                isNewClick = true;
+                percent = false;
+                break;
+            case "-":
+                if (percent == true) {
+                    result = num1 - prcnt;
+                } else {
+                    result = num1 - num2;
+                }
+                answer = String.valueOf(result);
+                display.setText(answer);
+                isNewClick = true;
+                percent = false;
+                break;
+            case "/":
+                if (percent == true) {
+                    result = num1 / prcnt;
+                } else {
+                    result = num1 / num2;
+                }
+                answer = String.valueOf(result);
+                display.setText(answer);
+                isNewClick = true;
+                percent = false;
+                break;
+            case "*":
+                if (percent == true) {
+                    result = prcnt * num1;
+                } else {
+                    result = num1 * num2;
+                }
+                answer = String.valueOf(result);
+                display.setText(answer);
+                isNewClick = true;
+                percent = false;
+                break;
         }
         str.append( num2 + " = " + answer + " ");
         statement.setText(str + "\n");
@@ -347,11 +347,5 @@ public class MainActivity extends AppCompatActivity {
         writer.println(str);
         writer.close();
     }
-
-
-
-
-
-    // fixme: add state handling
 
 }

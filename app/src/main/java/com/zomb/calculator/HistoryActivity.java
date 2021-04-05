@@ -20,6 +20,7 @@ public class HistoryActivity extends AppCompatActivity {
     // Initialize the text view
     TextView history;
 
+    // Since there isn't any data that needs to be stored, I did not save instance state. It reads whatever is in the txt file anyway.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
