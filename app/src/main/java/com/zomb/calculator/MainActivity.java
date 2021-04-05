@@ -10,14 +10,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.math.BigDecimal;
 
 import static java.lang.Math.*;
 
@@ -176,23 +171,22 @@ public class MainActivity extends AppCompatActivity {
         String number = (display.getText().toString() + btn_0.getText().toString());
         display.setText(number);
     }
-    // todo: percentage history
     public void btnPercentClick(View view) {
-        operation = "%";
         num2 = Double.parseDouble(display.getText().toString());
         prcnt = (num1 * (num2 / 100));
         display.setText(String.valueOf(prcnt));
-        str.replace(str.length() - 1, str.length(), Double.toString(prcnt));
         percent = true;
     }
 
     //todo: square root history
+    // fixme: crashes if equals is pressed
     public void btnRootClick(View view) {
         num1 = Double.parseDouble(display.getText().toString());
         double op = Double.parseDouble(display.getText().toString());
         op = sqrt(op);
         display.setText(String.valueOf(op));
-        str.append(display.getText().toString());
+        str.append("\u221A(" + num1 + ")");
+        statement.setText(str.toString());
         isNewClick = true;
     }
     //todo: square history
@@ -200,7 +194,7 @@ public class MainActivity extends AppCompatActivity {
         double op = Double.parseDouble(display.getText().toString());
         op = (op * op);
         display.setText(String.valueOf(op));
-        str.append(display.getText().toString());
+//        str.append(display.getText().toString());
         isNewClick = true;
     }
     //todo: 1/x history
@@ -284,57 +278,37 @@ public class MainActivity extends AppCompatActivity {
 
         switch (operation) {
             case "+":
-                if (isNewClick) {
-                    num1 = result;
-                }
-                if (percent == true) {
-                    result = prcnt + num1;
-                } else {
-                    result = num1 + num2;
-                }
-                answer = String.valueOf(result);
-                display.setText(answer);
-                isNewClick = true;
-                percent = false;
+                caclulateOperation(num1 + prcnt, num1 + num2);
                 break;
             case "-":
-                if (percent == true) {
-                    result = num1 - prcnt;
-                } else {
-                    result = num1 - num2;
-                }
-                answer = String.valueOf(result);
-                display.setText(answer);
-                isNewClick = true;
-                percent = false;
+                caclulateOperation(num1 - prcnt, num1 - num2);
                 break;
             case "/":
-                if (percent == true) {
-                    result = num1 / prcnt;
-                } else {
-                    result = num1 / num2;
-                }
-                answer = String.valueOf(result);
-                display.setText(answer);
-                isNewClick = true;
-                percent = false;
+                caclulateOperation(num1 / prcnt, num1 / num2);
                 break;
             case "*":
-                if (percent == true) {
-                    result = prcnt * num1;
-                } else {
-                    result = num1 * num2;
-                }
-                answer = String.valueOf(result);
-                display.setText(answer);
-                isNewClick = true;
-                percent = false;
+                caclulateOperation(prcnt * num1, num1 * num2);
                 break;
+            default:
+                answer = display.getText().toString();
+
         }
         str.append( num2 + " = " + answer + " ");
-        statement.setText(str + "\n");
+        statement.setText(str);
         writeToInternalFile(str.toString());
         str.delete(0, str.length() - 1);
+    }
+
+    private void caclulateOperation(double v, double v2) {
+        if (percent == true) {
+            result = v;
+        } else {
+            result = v2;
+        }
+        answer = String.valueOf(result);
+        display.setText(answer);
+        isNewClick = true;
+        percent = false;
     }
 
     public void btnHistClick(View view) {
