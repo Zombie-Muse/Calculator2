@@ -13,10 +13,12 @@ import android.widget.TextView;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 import static java.lang.Math.*;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity<places> extends AppCompatActivity {
     public static final String KEY_DISPLAY = "KEY_DISPLAY";
     public static final String KEY_STATEMENT = "KEY_STATEMENT";
 
@@ -28,6 +30,11 @@ public class MainActivity extends AppCompatActivity {
     StringBuilder str = new StringBuilder();
     Button btn_1, btn_2, btn_3, btn_4, btn_5, btn_6, btn_7, btn_8, btn_9, btn_0, btn_decimal, btn_add, btn_subtract, btn_multiply, btn_divide, btn_plusminus, btn_percent, btn_root, btn_sqr, btn_1x, btn_ce, btn_c, btn_back;
 
+    BigDecimal n1 = new BigDecimal(num1);
+    BigDecimal n2 = new BigDecimal(num2);
+    BigDecimal res = new BigDecimal("0");
+    BigDecimal per = new BigDecimal(prcnt);
+    BigDecimal oper = new BigDecimal("0");
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -171,38 +178,52 @@ public class MainActivity extends AppCompatActivity {
         String number = (display.getText().toString() + btn_0.getText().toString());
         display.setText(number);
     }
+    //fixme: it's all fucked up
     public void btnPercentClick(View view) {
         num2 = Double.parseDouble(display.getText().toString());
-        prcnt = (num1 * (num2 / 100));
-        display.setText(String.valueOf(prcnt));
+        n2 = BigDecimal.valueOf(num2);
+        n2.setScale(6, RoundingMode.HALF_UP);
+//        per = (n1.multiply(n2.divide(BigDecimal.valueOf(100))));
+        per = n2.divide(BigDecimal.valueOf(100.0));
+        per = per.multiply(n1);
+        display.setText(String.valueOf(per));
         percent = true;
     }
 
-    //todo: square root history
-    // fixme: crashes if equals is pressed
-    public void btnRootClick(View view) {
+    public void btnRootClick(View view) throws IOException {
         num1 = Double.parseDouble(display.getText().toString());
+        n1 = BigDecimal.valueOf(num1);
         double op = Double.parseDouble(display.getText().toString());
         op = sqrt(op);
-        display.setText(String.valueOf(op));
-        str.append("\u221A(" + num1 + ")");
+        oper = BigDecimal.valueOf(op);
+        display.setText(String.valueOf(oper));
+        str.append("\u221A(" + n1 + ")");
         statement.setText(str.toString());
+        writeToInternalFile(str.toString());
         isNewClick = true;
     }
-    //todo: square history
-    public void btnSqrClick(View view) {
+    public void btnSqrClick(View view) throws IOException {
+        num1 = Double.parseDouble(display.getText().toString());
+        n1 = BigDecimal.valueOf(num1);
         double op = Double.parseDouble(display.getText().toString());
         op = (op * op);
-        display.setText(String.valueOf(op));
-//        str.append(display.getText().toString());
+        oper = BigDecimal.valueOf(op);
+        display.setText(String.valueOf(oper));
+        str.append("sqr(" + n1 + ")" + " = " + oper);
+        statement.setText(str.toString());
+        writeToInternalFile(str.toString());
         isNewClick = true;
     }
-    //todo: 1/x history
-    public void btnOneXClick(View view) {
+    public void btnOneXClick(View view) throws IOException {
+        num1 = Double.parseDouble(display.getText().toString());
+        n1 = BigDecimal.valueOf(num1);
         double op = Double.parseDouble(display.getText().toString());
         op = (1 / op);
-        display.setText(String.valueOf(op));
-        str.append(display.getText().toString());
+        oper = BigDecimal.valueOf(op);
+        display.setText(String.valueOf(oper));
+        str.append("1/(" + n1 + ")" + " = " + oper);
+        statement.setText(str.toString());
+        writeToInternalFile(str.toString());
         isNewClick = true;
     }
     public void btnCeClick(View view) {
@@ -212,7 +233,9 @@ public class MainActivity extends AppCompatActivity {
     public void btnCClick(View view) {
         display.setText("0");
         num1 = 0.0;
+        n1 = BigDecimal.valueOf(0.0);
         num2 = 0.0;
+        n2 = BigDecimal.valueOf(0.0);
         if (str.length() != 0) {
             str.delete(0, str.length() - 1);
         }
@@ -232,29 +255,34 @@ public class MainActivity extends AppCompatActivity {
     }
     public void btnDivideClick(View view) {
         num1 = Double.parseDouble(display.getText().toString());
+        n1 = BigDecimal.valueOf(num1);
+        n1.setScale(6, RoundingMode.HALF_UP);
         operation = "/";
-        str.append(num1 + " " + operation + " ");
+        str.append(n1 + " " + operation + " ");
         statement.setText(str.toString());
         isNewClick = true;
     }
     public void btnMultClick(View view) {
         num1 = Double.parseDouble(display.getText().toString());
+        n1 = BigDecimal.valueOf(num1);
         operation = "*";
-        str.append(num1 + " " + operation + " ");
+        str.append(n1 + " " + operation + " ");
         isNewClick = true;
         statement.setText(str.toString());
     }
     public void btnAddClick(View view) {
         num1 = Double.parseDouble(display.getText().toString());
+        n1 = BigDecimal.valueOf(num1);
         operation = "+";
-        str.append(num1 + " " + operation + " ");
+        str.append(n1 + " " + operation + " ");
         statement.setText(str.toString());
         isNewClick = true;
     }
     public void btnSubClick(View view) {
         num1 = Double.parseDouble(display.getText().toString());
+        n1 = BigDecimal.valueOf(num1);
         operation = "-";
-        str.append(num1 + " " + operation + " ");
+        str.append(n1 + " " + operation + " ");
         statement.setText(str.toString());
         isNewClick = true;
     }
@@ -265,6 +293,7 @@ public class MainActivity extends AppCompatActivity {
         str.append(display.getText().toString());
         statement.setText(str.toString());
     }
+    // fixme: history prints first digit and decimal twice
     public void btnDecClick(View view) {
         if (!display.getText().toString().contains(".")) {
             String number = (display.getText().toString() + btn_decimal.getText().toString());
@@ -273,39 +302,42 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    // fixme: it's crashing again when equals is pressed when there is no calculation
     public void btnEqualClick(View view) throws IOException {
         num2 = Double.parseDouble(display.getText().toString());
+        n2 = BigDecimal.valueOf(num2);
 
         switch (operation) {
             case "+":
-                caclulateOperation(num1 + prcnt, num1 + num2);
+                calculateOperation(n1.add(per), n1.add(n2));
                 break;
             case "-":
-                caclulateOperation(num1 - prcnt, num1 - num2);
+                calculateOperation(n1.subtract(per), n1.subtract(n2));
                 break;
             case "/":
-                caclulateOperation(num1 / prcnt, num1 / num2);
+                calculateOperation(n1.divide(per), n1.divide(n2));
                 break;
             case "*":
-                caclulateOperation(prcnt * num1, num1 * num2);
+                calculateOperation(per.multiply(n1), n1.multiply(n2));
                 break;
             default:
-                answer = display.getText().toString();
+                return;
 
         }
-        str.append( num2 + " = " + answer + " ");
+        str.append( n2 + " = " + answer + " ");
         statement.setText(str);
         writeToInternalFile(str.toString());
         str.delete(0, str.length() - 1);
     }
 
-    private void caclulateOperation(double v, double v2) {
+    private void calculateOperation(BigDecimal v, BigDecimal v2) {
         if (percent == true) {
-            result = v;
+            res = v;
         } else {
-            result = v2;
+            res = v2;
         }
-        answer = String.valueOf(result);
+        res.setScale(6, RoundingMode.HALF_UP);
+        answer = String.valueOf(res);
         display.setText(answer);
         isNewClick = true;
         percent = false;
