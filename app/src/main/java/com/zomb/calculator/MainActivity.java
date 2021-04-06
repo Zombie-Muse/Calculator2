@@ -15,7 +15,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.math.MathContext;
 import java.math.RoundingMode;
 
@@ -40,12 +39,12 @@ public class MainActivity extends AppCompatActivity {
     Button btn_1, btn_2, btn_3, btn_4, btn_5, btn_6, btn_7, btn_8, btn_9, btn_0, btn_decimal, btn_add, btn_subtract, btn_multiply, btn_divide, btn_plusminus, btn_percent, btn_root, btn_sqr, btn_1x, btn_ce, btn_c, btn_back;
 
     // set computational variables to BigDecimal for greater accuracy
-    MathContext mc = new MathContext(9);
-    BigDecimal n1 = new BigDecimal(num1);
-    BigDecimal n2 = new BigDecimal(num2);
-    BigDecimal res = new BigDecimal("0");
-    BigDecimal per = new BigDecimal(prcnt);
-    BigDecimal oper = new BigDecimal("0");
+    MathContext mc = new MathContext(8);
+    BigDecimal n1 = new BigDecimal(num1, mc);
+    BigDecimal n2 = new BigDecimal(num2, mc);
+    BigDecimal res = new BigDecimal("0", mc);
+    BigDecimal per = new BigDecimal(prcnt, mc);
+    BigDecimal oper = new BigDecimal("0", mc);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -199,7 +198,7 @@ public class MainActivity extends AppCompatActivity {
         per = n2.divide(BigDecimal.valueOf(100.0));
         per = per.multiply(n1);
         per = per.round(mc);
-        display.setText(String.valueOf(per));
+        display.setText(String.valueOf(per.stripTrailingZeros()));
         percent = true;
     }
     public void btnRootClick(View view) throws IOException {
@@ -209,8 +208,8 @@ public class MainActivity extends AppCompatActivity {
             double op = Double.parseDouble(display.getText().toString());
             op = sqrt(op);
             oper = BigDecimal.valueOf(op);
-            display.setText(String.valueOf(oper));
-            str.append("\u221A(" + n1 + ")");
+            display.setText(String.valueOf(oper.stripTrailingZeros()));
+            str.append("\u221A(" + n1.stripTrailingZeros() + ")");
             statement.setText(str.toString());
             writeToInternalFile(str.toString());
             isNewClick = true;
@@ -226,24 +225,22 @@ public class MainActivity extends AppCompatActivity {
         double op = Double.parseDouble(display.getText().toString());
         oper = BigDecimal.valueOf(op);
         oper = oper.multiply(oper);
-        display.setText(String.valueOf(oper));
-        str.append("sqr(" + n1 + ")" + " = " + oper);
+        display.setText(String.valueOf(oper.stripTrailingZeros()));
+        str.append("sqr(" + n1.stripTrailingZeros() + ")" + " = " + oper);
         statement.setText(str.toString());
         writeToInternalFile(str.toString());
         isNewClick = true;
     }
-    // fixme: crashes with endless decimal or big decimals
     public void btnOneXClick(View view) throws IOException {
         num1 = Double.parseDouble(display.getText().toString());
         n1 = BigDecimal.valueOf(num1);
         double op = Double.parseDouble(display.getText().toString());
 //        op = (1 / op);
         oper = BigDecimal.valueOf(op);
-        BigDecimal divisor = new BigDecimal("1");
-        oper = divisor.divide(oper);
-        oper.round(mc);
-        display.setText(String.valueOf(oper));
-        str.append("1/(" + n1 + ")" + " = " + oper);
+        BigDecimal divisor = new BigDecimal("1.0", mc);
+        res = divisor.divide(oper, 8, RoundingMode.HALF_UP);
+        display.setText(String.valueOf(res.stripTrailingZeros()));
+        str.append("1/(" + n1.stripTrailingZeros() + ")" + " = " + oper.stripTrailingZeros());
         statement.setText(str.toString());
         writeToInternalFile(str.toString());
         isNewClick = true;
@@ -279,7 +276,7 @@ public class MainActivity extends AppCompatActivity {
         num1 = Double.parseDouble(display.getText().toString());
         n1 = BigDecimal.valueOf(num1);
         operation = "/";
-        str.append(n1 + " " + operation + " ");
+        str.append(n1.stripTrailingZeros() + " " + operation + " ");
         statement.setText(str.toString());
         isNewClick = true;
     }
@@ -287,7 +284,7 @@ public class MainActivity extends AppCompatActivity {
         num1 = Double.parseDouble(display.getText().toString());
         n1 = BigDecimal.valueOf(num1);
         operation = "*";
-        str.append(n1 + " " + operation + " ");
+        str.append(n1.stripTrailingZeros() + " " + operation + " ");
         isNewClick = true;
         statement.setText(str.toString());
     }
@@ -295,7 +292,7 @@ public class MainActivity extends AppCompatActivity {
         num1 = Double.parseDouble(display.getText().toString());
         n1 = BigDecimal.valueOf(num1);
         operation = "+";
-        str.append(n1 + " " + operation + " ");
+        str.append(n1.stripTrailingZeros() + " " + operation + " ");
         statement.setText(str.toString());
         isNewClick = true;
     }
@@ -303,7 +300,7 @@ public class MainActivity extends AppCompatActivity {
         num1 = Double.parseDouble(display.getText().toString());
         n1 = BigDecimal.valueOf(num1);
         operation = "-";
-        str.append(n1 + " " + operation + " ");
+        str.append(n1.stripTrailingZeros() + " " + operation + " ");
         statement.setText(str.toString());
         isNewClick = true;
     }
@@ -311,8 +308,8 @@ public class MainActivity extends AppCompatActivity {
         double op = Double.parseDouble(display.getText().toString());
         op = op * (-1);
         display.setText(String.valueOf(op));
-        str.append(display.getText().toString());
-        statement.setText(str.toString());
+//        str.append(display.getText().toString());
+//        statement.setText(str.toString());
     }
     public void btnDecClick(View view) {
         if (!display.getText().toString().contains(".")) {
@@ -320,7 +317,6 @@ public class MainActivity extends AppCompatActivity {
             display.setText(number);
         }
     }
-    // fixme: it's crashing again when endless decimal
     public void btnEqualClick(View view) throws IOException {
         //checks operation. If no operation then do nothing
         if (isValid()) {
@@ -329,25 +325,61 @@ public class MainActivity extends AppCompatActivity {
 
         switch (operation) {
             case "+":
-                calculateOperation(n1.add(per, DECIMAL32), n1.add(n2, DECIMAL32));
+                calculateAddOp(n1, n2, per);
                 break;
             case "-":
-                calculateOperation(n1.subtract(per, DECIMAL32), n1.subtract(n2, DECIMAL32));
+                calculateSubtractOp(n1, n2, per);
                 break;
             case "/":
-                calculateOperation(n1.divide(per, DECIMAL32), n1.divide(n2, DECIMAL32));
+                calculateDivideOp(n1, n2, per);
                 break;
             case "*":
-                calculateOperation(per.multiply(n1, DECIMAL32), n1.multiply(n2, DECIMAL32));
+                calculateMultiplyOp(n1, n2, per);
                 break;
             default:
                 return;
 
         }
-        str.append( n2 + " = " + answer + " ");
+        display.setText(res.toString());
+        str.append( n2.stripTrailingZeros() + " = " + res + " ");
         statement.setText(str);
         writeToInternalFile(str.toString());
-    }}
+        isNewClick = true;
+        percent = false;
+        operation = null;
+        }}
+
+    private void calculateMultiplyOp(BigDecimal n1, BigDecimal n2, BigDecimal per) {
+        if (percent) {
+            res = n1.multiply(per).stripTrailingZeros();
+        } else {
+            res = n1.multiply(n2).stripTrailingZeros();
+        }
+    }
+
+    private void calculateDivideOp(BigDecimal n1, BigDecimal n2, BigDecimal per) {
+        if (percent) {
+            res = n1.divide(per, 8, RoundingMode.HALF_UP).stripTrailingZeros();
+        } else {
+            res = n1.divide(n2, 8, RoundingMode.HALF_UP).stripTrailingZeros();
+        }
+    }
+
+    private void calculateAddOp(BigDecimal n1, BigDecimal n2, BigDecimal per) {
+        if (percent) {
+            res = n1.add(per).stripTrailingZeros();
+        } else {
+            res = n1.add(n2).stripTrailingZeros();
+        }
+    }
+
+    private void calculateSubtractOp(BigDecimal n1, BigDecimal n2, BigDecimal per) {
+        if (percent) {
+            res = n1.subtract(per).stripTrailingZeros();
+        } else {
+            res = n1.subtract(n2).stripTrailingZeros();
+        }
+    }
 
     // Checks to make sure operation is assigned. If not, then return true
     private boolean isValid() {
@@ -363,10 +395,6 @@ public class MainActivity extends AppCompatActivity {
         } else {
             res = v2;
         }
-        res = res.round(mc);
-        Log.d(TAG, "n2 = " + n2.toString());
-        Log.d(TAG, "res = " + res.toString());
-        Log.d(TAG, "n1 = " + n1.toString());
         answer = String.valueOf(res);
         display.setText(answer);
         isNewClick = true;
