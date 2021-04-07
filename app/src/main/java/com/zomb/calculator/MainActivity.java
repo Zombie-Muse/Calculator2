@@ -26,7 +26,6 @@ import static java.math.MathContext.*;
 public class MainActivity extends AppCompatActivity {
     public static final String KEY_DISPLAY = "KEY_DISPLAY";
     public static final String KEY_STATEMENT = "KEY_STATEMENT";
-    private static final String TAG = "Help Me Goddamnit";
 
     // Initialize variables
     double num1;
@@ -208,8 +207,8 @@ public class MainActivity extends AppCompatActivity {
             double op = Double.parseDouble(display.getText().toString());
             op = sqrt(op);
             oper = BigDecimal.valueOf(op);
-            display.setText(String.valueOf(oper.stripTrailingZeros()));
-            str.append("\u221A(" + n1.stripTrailingZeros() + ")");
+            display.setText(String.valueOf(oper.stripTrailingZeros().toPlainString()));
+            str.append("\u221A(" + n1.stripTrailingZeros().toPlainString() + ")");
             statement.setText(str.toString());
             writeToInternalFile(str.toString());
             isNewClick = true;
@@ -226,7 +225,7 @@ public class MainActivity extends AppCompatActivity {
         oper = BigDecimal.valueOf(op);
         oper = oper.multiply(oper);
         display.setText(String.valueOf(oper.stripTrailingZeros()));
-        str.append("sqr(" + n1.stripTrailingZeros() + ")" + " = " + oper);
+        str.append("sqr(" + n1.stripTrailingZeros().toPlainString() + ")" + " = " + oper);
         statement.setText(str.toString());
         writeToInternalFile(str.toString());
         isNewClick = true;
@@ -240,7 +239,7 @@ public class MainActivity extends AppCompatActivity {
         BigDecimal divisor = new BigDecimal("1.0", mc);
         res = divisor.divide(oper, 8, RoundingMode.HALF_UP);
         display.setText(String.valueOf(res.stripTrailingZeros()));
-        str.append("1/(" + n1.stripTrailingZeros() + ")" + " = " + oper.stripTrailingZeros());
+        str.append("1/(" + n1.stripTrailingZeros().toPlainString() + ")" + " = " + oper.stripTrailingZeros().toPlainString());
         statement.setText(str.toString());
         writeToInternalFile(str.toString());
         isNewClick = true;
@@ -273,34 +272,50 @@ public class MainActivity extends AppCompatActivity {
         isNewClick = true;
     }
     public void btnDivideClick(View view) {
+        if (str.length() != 0) {
+            str.delete(0, str.length() - 1);
+        }
+        statement.setText("");
         num1 = Double.parseDouble(display.getText().toString());
         n1 = BigDecimal.valueOf(num1);
         operation = "/";
-        str.append(n1.stripTrailingZeros() + " " + operation + " ");
+        str.append(n1.stripTrailingZeros().toPlainString() + " " + operation + " ");
         statement.setText(str.toString());
         isNewClick = true;
     }
     public void btnMultClick(View view) {
-        num1 = Double.parseDouble(display.getText().toString());
+
+        if (str.length() != 0) {
+            str.delete(0, str.length() - 1);
+        }
+        statement.setText("");        num1 = Double.parseDouble(display.getText().toString());
         n1 = BigDecimal.valueOf(num1);
         operation = "*";
-        str.append(n1.stripTrailingZeros() + " " + operation + " ");
+        str.append(n1.stripTrailingZeros().toPlainString() + " " + operation + " ");
         isNewClick = true;
         statement.setText(str.toString());
     }
     public void btnAddClick(View view) {
-        num1 = Double.parseDouble(display.getText().toString());
+
+        if (str.length() != 0) {
+            str.delete(0, str.length() - 1);
+        }
+        statement.setText("");        num1 = Double.parseDouble(display.getText().toString());
         n1 = BigDecimal.valueOf(num1);
         operation = "+";
-        str.append(n1.stripTrailingZeros() + " " + operation + " ");
+        str.append(n1.stripTrailingZeros().toPlainString() + " " + operation + " ");
         statement.setText(str.toString());
         isNewClick = true;
     }
     public void btnSubClick(View view) {
-        num1 = Double.parseDouble(display.getText().toString());
+
+        if (str.length() != 0) {
+            str.delete(0, str.length() - 1);
+        }
+        statement.setText("");        num1 = Double.parseDouble(display.getText().toString());
         n1 = BigDecimal.valueOf(num1);
         operation = "-";
-        str.append(n1.stripTrailingZeros() + " " + operation + " ");
+        str.append(n1.stripTrailingZeros().toPlainString() + " " + operation + " ");
         statement.setText(str.toString());
         isNewClick = true;
     }
@@ -340,8 +355,8 @@ public class MainActivity extends AppCompatActivity {
                 return;
 
         }
-        display.setText(res.toString());
-        str.append( n2.stripTrailingZeros() + " = " + res + " ");
+        display.setText(res.toPlainString());
+        str.append( n2.stripTrailingZeros().toPlainString() + " = " + res.toPlainString() + " ");
         statement.setText(str);
         writeToInternalFile(str.toString());
         isNewClick = true;
@@ -389,17 +404,6 @@ public class MainActivity extends AppCompatActivity {
        return true;
     }
 
-    private void calculateOperation(BigDecimal v, BigDecimal v2) {
-        if (percent == true) {
-            res = v;
-        } else {
-            res = v2;
-        }
-        answer = String.valueOf(res);
-        display.setText(answer);
-        isNewClick = true;
-        percent = false;
-    }
 
     // History button
     public void btnHistClick(View view) {
