@@ -5,3 +5,6 @@ Calculator app for CIS4280
 There really isn't much else that's special about it. I utilized BigDecimal variables rather than double to get more accurate calculations. The layout is simalar to a Windows calculator, but with less functionality.
 
 The app records calculations in a txt file that is displayed when the user pressed the history button. The user can then go back or delete history. This is exciting news for people that like to erase their past mistakes and life...er...calculation choices. 
+
+|<img src="CalculatorScreenshots/Calculator1.png">|<img src="CalculatorScreenshots/Calculator2.png">|<img src="CalculatorScreenshots/Calculator3.png">|
+| ----- | ----- | ----- |
