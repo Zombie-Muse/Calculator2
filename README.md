@@ -6,5 +6,5 @@ There really isn't much else that's special about it. I utilized BigDecimal vari
 
 The app records calculations in a txt file that is displayed when the user pressed the history button. The user can then go back or delete history. This is exciting news for people that like to erase their past mistakes and life...er...calculation choices. 
 
-|<img src="CalculatorScreenshots/Calculator1.png">|<img src="CalculatorScreenshots/Calculator2.png">|<img src="CalculatorScreenshots/Calculator3.png">|
+|<img src="CalculatorScreenshots/calculator1.png">|<img src="CalculatorScreenshots/calculator2.png">|<img src="CalculatorScreenshots/calculator3.png">|
 | ----- | ----- | ----- |
